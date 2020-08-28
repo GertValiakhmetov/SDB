@@ -20,7 +20,7 @@ const ItemList = (props) => {
     });
 
     return (
-        <ul className='item-list list-group'>
+        <ul className='item-list-margin item-list list-group'>
             {items}
         </ul>
     );

@@ -4,7 +4,9 @@ import Header from "../header/header";
 import ErrorMessage from "../error-message/error-message";
 import './app.css'
 import SwapiService from "../../services/swapi-services";
-import  {Record} from "../item-details";
+
+import {SwapiServiceProvider} from "../swapi-service-context";
+
 
 import {
     PersonDetailsList,
@@ -14,6 +16,7 @@ import {
     StarshipDetailsList,
     StarshipList
 } from "../sw-components";
+import ErrorBoundry from "../ErrorBoundry/ErrorBoundry";
 
 export default class App extends Component {
 
@@ -35,39 +38,21 @@ export default class App extends Component {
         }
 
         return (
+            <ErrorBoundry>
+                <SwapiServiceProvider value={this.swapiService}>
+                    <div>
+                        <Header/>
 
-            <div>
-                <Header/>
+                        <PersonDetailsList itemId={13}/>
+                        <PlanetDetailsList itemId={13}/>
+                        <StarshipDetailsList itemId={13}/>
 
-                <PersonDetailsList itemId={13}>
-                    <Record field="gender" label="Gender"/>
-                    <Record field="eyeColor" label="Eye Color"/>
-                </PersonDetailsList>
-
-                <PlanetDetailsList itemId={13}>
-                    <Record field="population" label="Population"/>
-                    <Record field="rotationPeriod" label="Rotation Period"/>
-                    <Record field="diameter" label="Diameter"/>
-                </PlanetDetailsList>
-
-                <StarshipDetailsList itemId={13}>
-                    <Record field="model" label="Model"/>
-                    <Record field="length" label="Length"/>
-                    <Record field="costInCredits" label="Cost"/>
-                </StarshipDetailsList>
-
-                <PersonList>
-                    {({name}) => <span>{name}</span>}
-                </PersonList>
-
-                <StarshipList>
-                    {({name}) => <span>{name}</span>}
-                </StarshipList>
-
-                <PlanetList>
-                    {({name}) => <span>{name}</span>}
-                </PlanetList>
-            </div>
+                        <PersonList/>
+                        <StarshipList/>
+                        <PlanetList/>
+                    </div>
+                </SwapiServiceProvider>
+            </ErrorBoundry>
         )
     }
 }
