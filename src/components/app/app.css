@@ -1,0 +1,15 @@
+.item-list-inf {
+    width: 100%;
+}
+
+
+.addition-inform {
+    display: inline-block;
+    horiz-align: center;
+    color: #fff2c5;
+    padding-left: 2rem;
+}
+.text {
+    padding-left: 1rem;
+    color: #ffd9a9;
+}
