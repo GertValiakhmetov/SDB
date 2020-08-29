@@ -4,30 +4,37 @@ import Header from "../header/header";
 import ErrorMessage from "../error-message/error-message";
 import './app.css'
 import SwapiService from "../../services/swapi-services";
-
-import {SwapiServiceProvider} from "../swapi-service-context";
-
-
-import {
-    PersonDetailsList,
-    PersonList,
-    PlanetDetailsList,
-    PlanetList,
-    StarshipDetailsList,
-    StarshipList
-} from "../sw-components";
 import ErrorBoundry from "../ErrorBoundry/ErrorBoundry";
+import DummySwapiService from "../../services/dummy-swapi-service";
+import {SwapiServiceProvider} from "../swapi-service-context";
+import RandomPlanet from "../random-planet";
+
+import {PeoplePage} from "../pages";
+import {PlanetsPage} from "../pages/";
+import {StarshipsPage} from "../pages/";
+
+
 
 export default class App extends Component {
 
-    swapiService = new SwapiService();
-
     state = {
         hasError: false,
+        swapiService: new SwapiService()
+    }
+
+    onServiceChange = () => {
+        this.setState(
+            ({swapiService}) => {
+                const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+                console.log('Suck my dick');
+                return {
+                    swapiService: new Service()
+                };
+            }
+        );
     }
 
     componentDidCatch(error, errorInfo) {
-        console.log('componentDidCatch()')
         this.setState({hasError: true})
     }
 
@@ -39,17 +46,14 @@ export default class App extends Component {
 
         return (
             <ErrorBoundry>
-                <SwapiServiceProvider value={this.swapiService}>
+                <SwapiServiceProvider value={this.state.swapiService}>
                     <div>
-                        <Header/>
+                        <Header onServiceChange={this.onServiceChange}/>
+                        <RandomPlanet/>
 
-                        <PersonDetailsList itemId={13}/>
-                        <PlanetDetailsList itemId={13}/>
-                        <StarshipDetailsList itemId={13}/>
-
-                        <PersonList/>
-                        <StarshipList/>
-                        <PlanetList/>
+                        <PeoplePage/>
+                        <PlanetsPage/>
+                        <StarshipsPage/>
                     </div>
                 </SwapiServiceProvider>
             </ErrorBoundry>

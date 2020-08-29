@@ -6,6 +6,7 @@ export default class SwapiService {
     getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
         if (!res.ok) {
+            // eslint-disable-next-line no-useless-concat
             throw new Error(`Could not fetch ${url}` + `, received ${res.status}`)
         }
         return await res.json();
@@ -50,7 +51,7 @@ export default class SwapiService {
         return `${this._imgBase}starships/${id}.jpg`
     }
 
-    getPlanetsImage = ({id}) => {
+    getPlanetImage = ({id}) => {
         return `${this._imgBase}planets/${id}.jpg`
     }
 
