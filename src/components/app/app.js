@@ -26,7 +26,6 @@ export default class App extends Component {
         this.setState(
             ({swapiService}) => {
                 const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
-                console.log('Suck my dick');
                 return {
                     swapiService: new Service()
                 };
@@ -49,7 +48,7 @@ export default class App extends Component {
                 <SwapiServiceProvider value={this.state.swapiService}>
                     <div>
                         <Header onServiceChange={this.onServiceChange}/>
-                        <RandomPlanet/>
+                        <RandomPlanet />
 
                         <PeoplePage/>
                         <PlanetsPage/>
